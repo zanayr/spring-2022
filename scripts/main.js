@@ -24,8 +24,9 @@ function draw(webglContext) {
     // <-- Check options here
 
     // <-- Set uniform values here
+    context.uniform3fv(context.getUniformLocation(program, "u_color"), vertices.color);
 
-    context.drawArrays(mode, 0, 1);
+    context.drawArrays(mode, 0, 2);
 
     context.bindVertexArray(null);
     context.useProgram(null);
@@ -87,7 +88,10 @@ function init() {
   // Simple black point
   const data = {
     color: {
-      color: [ 0.0, 0.0, 0.0, 1.0 ],
+      color: [
+        0.0, 0.0, 1.0,
+        1.0, 0.0, 0.0,
+      ],
       location: 4,
     },
     indices: [],
@@ -95,7 +99,10 @@ function init() {
     uvs: [],
     vertices: {
       size: 4,
-      vertices: [ 0.0, 0.0, 0.0, 0.0 ],
+      vertices: [
+        0.0, 0.0, 0.0, 0,
+        0.5, 0.5, 0.0, 1,
+      ],
     },
   };
 
@@ -109,6 +116,7 @@ function init() {
   add(transformManager, point, transform);
   add(renderManager, point, render(pointShader, initialize(context, model(data)), context.POINTS));
 
+  // Uniforms
 
   clear(context);
 }

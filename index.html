@@ -13,8 +13,14 @@
     <script type="module" src="/scripts/main.js"></script>
     <script id="vertex-point" type="x-shader/x-vertex">#version 300 es
       in vec3 a_vertex;
+      layout(location=4) in float a_color;
+
+      uniform vec3 u_color[2];
+
+      out lowp vec4 color;
 
       void main(void) {
+        color = vec4(u_color[int(a_color)], 1.0);
         gl_PointSize = 10.0;
         gl_Position = vec4(a_vertex, 1.0);
       }
@@ -22,10 +28,11 @@
   <script id="fragment-point" type="x-shader/x-fragment">#version 300 es
       precision mediump float;
 
+      in vec4 color;
       out vec4 final;
       
       void main(void) {
-        final = vec4(1.0, 0.0, 0.0, 1.0);
+        final = color;
       }
   </script>
   </body>
